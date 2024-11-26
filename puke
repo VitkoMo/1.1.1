@@ -1,0 +1,40 @@
+import random
+
+# 定义扑克牌的花色和点数
+suits = ['♠', '♥', '♦', '♣']
+ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+
+# 创建一副扑克牌
+def create_deck():
+    deck = []
+    for suit in suits:
+        for rank in ranks:
+            deck.append(f"{rank}{suit}")
+    return deck
+
+# 洗牌
+def shuffle_deck(deck):
+    random.shuffle(deck)
+
+# 发牌
+def deal_cards(deck, num_players, cards_per_player):
+    hands = {f"玩家 {i+1}": [] for i in range(num_players)}
+    for _ in range(cards_per_player):
+        for player in hands.keys():
+            if deck:
+                hands[player].append(deck.pop())
+    return hands
+
+# 主程序
+if __name__ == "__main__":
+    deck = create_deck()  # 创建一副牌
+    shuffle_deck(deck)    # 洗牌
+
+    num_players = 4       # 玩家数量
+    cards_per_player = 5  # 每个玩家发牌数量
+
+    hands = deal_cards(deck, num_players, cards_per_player)  # 发牌
+
+    # 打印每个玩家的手牌
+    for player, cards in hands.items():
+        print(f"{player} 的手牌: {', '.join(cards)}")
